@@ -85,3 +85,27 @@ class ITSupportAgent:
             "result": history.final_result(),
             "success": history.is_successful(),
         }
+
+if __name__ == "__main__":
+    # Test execution when running the file directly
+    async def run_all():
+        agent = ITSupportAgent()
+        
+        # Task 1
+        print("\n--- Running Task 1: Reset Password ---")
+        t1 = await agent.execute("Reset password for alice@company.com")
+        print("Result 1:", t1["result"])
+        await asyncio.sleep(2)
+        
+        # Task 2
+        print("\n--- Running Task 2: Create User & Assign License ---")
+        t2 = await agent.execute("Create a new user diana@company.com named 'Diana Prince' in 'Security'. Then assign her the 'Microsoft 365' license.")
+        print("Result 2:", t2["result"])
+        await asyncio.sleep(2)
+        
+        # Task 3
+        print("\n--- Running Task 3: Conditional Multi-step Onboarding ---")
+        t3 = await agent.execute("Check if eve@company.com exists. If not, create her (Eve Torres in Legal). Then reset her password and assign her 'Slack Pro'.")
+        print("Result 3:", t3["result"])
+
+    asyncio.run(run_all())
