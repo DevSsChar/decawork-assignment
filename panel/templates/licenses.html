@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Licenses</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>Current Licenses</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.full_name }}</td>
+                <td>{{ user.licenses | join(', ') }}</td>
+                <td>
+                    <form action="/licenses/assign" method="POST" style="margin: 0; display: flex; align-items: center;">
+                        <input type="hidden" name="email" value="{{ user.email }}">
+                        <select name="license" required>
+                            <option value="">Select license...</option>
+                            {% for lic in available_licenses %}
+                                <option value="{{ lic }}">{{ lic }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" style="margin-left: 10px; margin-bottom: 10px;">Assign License</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

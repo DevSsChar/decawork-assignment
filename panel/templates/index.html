@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+    <div style="display: flex; gap: 20px; margin-bottom: 40px;">
+        <div style="padding: 20px; background: #f8fafc; border-radius: 8px; flex: 1;">
+            <h3>Total Users</h3>
+            <p style="font-size: 2em; font-weight: bold; margin: 0;">{{ total_users }}</p>
+        </div>
+        <div style="padding: 20px; background: #f8fafc; border-radius: 8px; flex: 1;">
+            <h3>Active</h3>
+            <p style="font-size: 2em; font-weight: bold; margin: 0; color: #065f46;">{{ active_users }}</p>
+        </div>
+        <div style="padding: 20px; background: #f8fafc; border-radius: 8px; flex: 1;">
+            <h3>Suspended</h3>
+            <p style="font-size: 2em; font-weight: bold; margin: 0; color: #991b1b;">{{ suspended_users }}</p>
+        </div>
+    </div>
+
+    <h2>Recent Audit Logs</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Actor</th>
+                <th>Action</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in audit_log %}
+            <tr>
+                <td>{{ log.timestamp }}</td>
+                <td>{{ log.actor }}</td>
+                <td>{{ log.action }}</td>
+                <td>{{ log.detail }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">No logs yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

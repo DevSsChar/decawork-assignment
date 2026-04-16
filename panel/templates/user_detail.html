@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User Details</h1>
+    <dl>
+        <dt><strong>Email:</strong></dt><dd>{{ user.email }}</dd>
+        <dt><strong>Full Name:</strong></dt><dd>{{ user.full_name }}</dd>
+        <dt><strong>Department:</strong></dt><dd>{{ user.department }}</dd>
+        <dt><strong>Status:</strong></dt><dd><span class="badge-{{ user.status }}">{{ user.status }}</span></dd>
+    </dl>
+    
+    <div style="margin-top: 20px;">
+        <form action="/reset-password" method="POST" style="display:inline-block; margin-right:10px;">
+            <input type="hidden" name="email" value="{{ user.email }}">
+            <button type="submit">Reset Password</button>
+        </form>
+
+        {% if user.status == 'active' %}
+        <form action="/users/{{ user.email }}/suspend" method="POST" style="display:inline-block;">
+            <button type="submit" style="background: #ef4444;">Suspend User</button>
+        </form>
+        {% elif user.status == 'suspended' %}
+        <form action="/users/{{ user.email }}/activate" method="POST" style="display:inline-block;">
+            <button type="submit" style="background: #10b981;">Activate User</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <h3>Current Licenses</h3>
+    {% if user.licenses %}
+        <ul>
+            {% for lic in user.licenses %}
+            <li>{{ lic }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No licenses assigned.</p>
+    {% endif %}
+{% endblock %}

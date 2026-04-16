@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Users</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.full_name }}</td>
+                <td>{{ user.department }}</td>
+                <td><span class="badge-{{ user.status }}">{{ user.status }}</span></td>
+                <td><a class="button" style="text-decoration:none; background:#e2e8f0; color:black; padding:4px 8px; border-radius:4px;" href="/users/{{ user.email }}">View</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr style="margin: 40px 0;">
+
+    <h2>Create New User</h2>
+    <form action="/users/create" method="POST">
+        <div>
+            <label>Email</label><br>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <label>Full Name</label><br>
+            <input type="text" name="full_name" required>
+        </div>
+        <div>
+            <label>Department</label><br>
+            <input type="text" name="department" required>
+        </div>
+        <div>
+            <label>Status</label><br>
+            <select name="status">
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="suspended">Suspended</option>
+            </select>
+        </div>
+        <button type="submit">Create User</button>
+    </form>
+{% endblock %}

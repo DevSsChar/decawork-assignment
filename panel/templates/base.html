@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Admin Panel</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/"><strong>IT Admin Panel</strong></a>
+        <a href="/">Dashboard</a>
+        <a href="/users">Users</a>
+        <a href="/reset-password">Password Reset</a>
+        <a href="/licenses">Licenses</a>
+    </nav>
+
+    <div style="margin-top: 20px;">
+        {% if request.session.get('flash') %}
+            <div class="{{ request.session['flash_class'] }}">
+                {{ request.session.pop('flash') }}
+                {% set _ = request.session.pop('flash_class', None) %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
