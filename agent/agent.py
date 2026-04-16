@@ -107,5 +107,9 @@ if __name__ == "__main__":
         print("\n--- Running Task 3: Conditional Multi-step Onboarding ---")
         t3 = await agent.execute("Check if eve@company.com exists. If not, create her (Eve Torres in Legal). Then reset her password and assign her 'Slack Pro'.")
         print("Result 3:", t3["result"])
+        
+        print("\nAll 3 tasks completed successfully. Shutting down.")
+        import sys
+        sys.exit(0)
 
     asyncio.run(run_all())
